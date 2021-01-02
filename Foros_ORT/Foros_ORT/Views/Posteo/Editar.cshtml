@@ -1,0 +1,20 @@
+﻿@model Foros_ORT.Models.ModelosPosteo.ModeloNuevoPosteo
+
+<h1>Posteo a editar de @Model.NombreForo</h1>
+
+<form asp-action="EditarPosteo" asp-route-idPosteo="@ViewData["idPosteo"]" method="post" id="formularioAgregarPosteo">
+
+    <div class="form-group">
+        <label asp-for="Titulo"></label>
+        <input asp-for="Titulo" class="form-control" placeholder="@Model.Titulo" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Contenido"></label>
+        <input asp-for="Contenido" class="form-control" placeholder="@Model.Contenido" />
+    </div>
+    <button type="submit" id="botonSubirPosteo" class="btn btn-outline-dark">
+        Editar Posteo
+    </button>
+    <input asp-for="IdForo" type="hidden" />
+
+</form>

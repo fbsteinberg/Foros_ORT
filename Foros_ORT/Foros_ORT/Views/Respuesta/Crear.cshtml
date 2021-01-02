@@ -1,0 +1,28 @@
+﻿@model Foros_ORT.Models.ModelosRespuesta.ModeloRespuestaPosteo
+
+<h1>Respuesta a "@Model.TituloPosteo"</h1>
+
+<a style="padding-top:15px" asp-controller="Posteo" asp-action="Index" asp-route-id="@Model.IdPosteo" class="btn btn-danger">Volver al posteo</a>
+
+<div style="padding-top:40px;">
+    <h2>
+        @Model.TituloPosteo
+    </h2>
+    <p>
+        @Model.ContenidoPosteo
+    </p>
+</div>
+<div style="padding-top:20px;">
+    <p>Respuesta a @Model.NombreAutor</p>
+    <form asp-action="AgregarRespuesta" method="post">
+        <div asp-validation-summary="All" class="text-danger">
+            <label asp-for="Contenido">Tu respuesta: </label>
+            <input asp-for="Contenido" rows="10" class="form-control" />
+            <span asp-validation-for="Contenido" class="text-danger"></span>
+        </div>
+        <input asp-for="IdAutor" type="hidden" />
+        <input asp-for="IdPosteo" type="hidden" />
+        <input asp-for="IdForo" type="hidden" />
+        <button type="submit" class="form-control">Enviar respuesta</button>
+    </form>
+</div>

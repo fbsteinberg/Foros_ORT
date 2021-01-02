@@ -1,0 +1,59 @@
+﻿@model Foros_ORT.Models.ModelosPosteo.ModeloIndicePosteo
+
+<a asp-controller="Foro" asp-action="Tema" asp-route-id="@Model.IdForo"><h2 class="btn btn-info">Volver al foro @Model.NombreForo</h2></a>
+
+<h1>@Model.Titulo</h1>
+
+@if (User.Identity.Name == Model.nombreAutor)
+{
+    <a asp-controller="Posteo" asp-action="Editar" asp-route-id="@Model.Id" asp-route-idForo="@Model.IdForo" class="btn btn-primary">Editar</a>
+}
+
+
+@if (User != null)
+{
+    <a asp-controller="Respuesta" asp-action="Crear" asp-route-id="@Model.Id" class="btn btn-secondary">Responder</a>
+}
+
+
+
+
+<div class="container alert-heading" style="background-color:beige; margin-top:15px;">
+
+    <div>
+        Autor: @Model.nombreAutor
+        <br />
+        Creado: @Model.Creado
+    </div>
+    <hr />
+    <div>
+        @Model.Contenido
+    </div>
+</div>
+@if (Model.Respuestas.Any())
+{
+    foreach (var respuesta in Model.Respuestas)
+    {
+<div class="container alert-info" style="margin-top:15px;">
+    @if (respuesta.NombreAutor == User.Identity.Name)
+    {
+        <a asp-controller="Respuesta" asp-action="Editar"asp-route-id="@respuesta.Id"  asp-route-idPosteo="@Model.Id" asp-route-contenido="@respuesta.Contenido"  class="btn btn-danger">Editar</a>
+    }
+    <div>
+        Autor de la respuesta: @respuesta.NombreAutor
+        <br />
+        Fecha de la respuesta: @respuesta.Creado
+    </div>
+    <hr />
+    <div>
+        @respuesta.Contenido
+    </div>
+</div>
+    }
+}
+else
+{
+    <div style="background-color:aqua; margin-top:15px;">
+        <h3>Este posteo aún no ha recibido respuestas</h3>
+    </div>
+}

@@ -1,0 +1,57 @@
+﻿@model Foros_ORT.Models.ModelosForo.ModeloTemaForo
+
+<h1>Bienvenido al foro de @Model.Foro.Nombre</h1>
+
+<a asp-controller="Posteo" asp-action="Crear" asp-route-id=@Model.Foro.Id class="btn btn-dark">Crear Posteo</a>
+<div class="row" style="margin-top: 15px; display: flex; justify-content: center;">
+    <form asp-controller="Foro" asp-action="Buscar" method="post" style="width:300px">
+            <input class="form-control" asp-for="PedidoBusqueda" type="text" />
+            <button type="submit" class="btn btn-outline-secondary" style="margin-left:120px;margin-top:5px;">Buscar</button>
+        <input asp-for="Foro.Id" name="id" type="hidden" />
+    </form>
+</div>
+<div class="container" style="background-color:beige">
+    @if (Model.Posteos.Any())
+    {
+        <table class="table table-hover table-bordered" style="margin-top:15px">
+            <tbody>
+                <tr>
+                    <td><h3>Titulo</h3></td>
+                    <td><h3>Nombre del autor</h3></td>
+                    <td><h3>Fecha de creacion</h3></td>
+                    <td><h3>Cantidad de respuestas</h3></td>
+                </tr>
+                @foreach (var posteo in Model.Posteos)
+                {
+                    <tr>
+                        <td>
+                            <a asp-controller="Posteo" asp-action="Index" asp-route-id="@posteo.Id">@posteo.Titulo</a>
+                        </td>
+                        <td>
+                            @posteo.NombreAutor
+                        </td>
+                        <td>
+                            @posteo.Fecha
+                        </td>
+                        <td>
+                            @posteo.CantidadRespuestas
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="NoHayPosteos">
+            <h3>
+                Parece que aún no hay posteos de @Model.Foro.Nombre
+                <br />
+                ¿Quisieras ser el primero en crear uno?
+                <a asp-controller="Posteo" asp-action="Crear" asp-route-id=@Model.Foro.Id>
+                    Crear tema
+                </a>
+            </h3>
+        </div>
+    }
+</div>

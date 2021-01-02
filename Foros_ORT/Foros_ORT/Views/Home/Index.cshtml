@@ -1,0 +1,86 @@
+﻿@model Foros_ORT.Models.ModelosHome.ModeloIndiceHome
+
+<div class="container body-content" style="background-color:blanchedalmond">
+    <div class="row">
+        <div class="col-lg-12" style="background-color:darkcyan">
+            <div class="alert-heading">
+                <h3 style="color:white">Si buscas aprender de autos estas en el lugar correcto, somos el foro de autos de latinoamerica con mayor crecimiento en el último año</h3>
+            </div>    
+        </div>
+    </div>
+    <div class="row" style="margin-top:15px">
+        <div class="col-lg-8">
+            <h2 id="ultimosPosteos">Ultimos Posteos</h2>
+        </div>
+        <div class="col-lg-4">
+            <form asp-controller="Buscar" asp-action="Buscar" method="post">
+                <input class="form-control" asp-for="PedidoBusqueda" type="text" placeholder="Buscar " style="transition: ease-in 0.2s" />
+            </form>
+        </div>
+    </div>
+        <table class="table table-hover">
+            <tbody>
+                <tr>
+                    <td>
+                        <h3>Categoria</h3>
+                        
+                    </td>
+                    <td>
+                        <h3>Titulo</h3> 
+                    </td>
+                    <td>
+                        <h3>Respuestas</h3>
+                    </td>
+                    <td>
+                        <h3>Autor</h3>
+                    </td>
+                </tr>
+                @foreach(var posteo in Model.UltimosPosteos)
+                {
+                    <tr>
+                        <td> 
+                            <img style="width: 150px; height: 100px; display: inline-block;" class="imagenForo" src="../@posteo.Foro.UrlImagen" />
+                        </td>
+                           <td>
+                               <div>
+                                    <a asp-controller="Posteo" asp-action="Index" asp-route-id="@posteo.Id">
+                                        @posteo.Titulo
+                                    </a>
+                                </div>
+                        </td>
+                           <td>
+
+                               @if (posteo.CantidadRespuestas == 0)
+                               {
+                                   <span>
+                                       Sin respuestas
+                                   </span>
+                               }
+                               else
+                               {
+                                   @if (posteo.CantidadRespuestas == 1)
+                                   {
+                                       <span>
+                                           @posteo.CantidadRespuestas respuesta
+                                       </span>
+                                   }
+                                   else
+                                   {
+                                       <span>
+                                           @posteo.CantidadRespuestas respuestas
+                                       </span>
+                                   }
+                               }
+                           </td>
+                           
+                           <td>
+                               <span>
+                                   <a asp-controller="Perfil" asp-action="Detalle" asp-route-id="@posteo.IdAutor">@posteo.NombreAutor</a>
+                               </span>
+                           </td>                            
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div> 
